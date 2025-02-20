@@ -1,6 +1,10 @@
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import static org.mockito.Mockito.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
+import java.util.stream.Stream;
 
 public class TestCaseResourceTest1 {
     @Mock
@@ -20,10 +24,22 @@ public class TestCaseResourceTest1 {
     private void beforeFileTest() throws Exception {
         doReturn(true).when(areaService).checkExists(any(String.class), eq(false));
     }
-
-    @Test
-    public void verifyFileExists() throws Exception {
+    
+    @ParameterizedTest
+    @ValueSource(strings = { "Hello", "World" })
+    void verifyFileExists(String argument) throws Exception {
+        assertNotNull(argument);
         verifyOtherArea(testCaseService1);
         doReturn(false).when(areaService).checkExists(any(String.class), eq(false));
+    }
+
+    @ParameterizedTest
+    @MethodSource("stringProvider")
+    void testWithSimpleMethodSource(String argument) {
+        assertNotNull(argument);
+    }
+
+    static Stream<String> stringProvider() {
+        return Stream.of("foo", "bar");
     }
 } 
