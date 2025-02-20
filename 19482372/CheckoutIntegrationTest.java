@@ -29,16 +29,12 @@ public class CheckoutIntegrationTest {
         // ... test setup code
         
         verify(orderService).createOrder(
-            argThat(allOf(
-                hasProperty("details", 
-                    hasProperty("dateTimeOfSubmission", notNullValue())),
-                hasProperty("details", 
-                    hasProperty("name", equalTo(CUSTOMER_NAME))),
-                hasProperty("details", 
-                    hasProperty("address1", equalTo(ADDRESS1))),
-                hasProperty("details", 
-                    hasProperty("postcode", equalTo(POST_CODE)))
-            ))
+            argThat(hasProperty("details", allOf(
+                hasProperty("dateTimeOfSubmission", notNullValue()),
+                hasProperty("name", equalTo(CUSTOMER_NAME)),
+                hasProperty("address1", equalTo(ADDRESS1)),
+                hasProperty("postcode", equalTo(POST_CODE))
+            )))
         );
     }
 } 
