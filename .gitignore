@@ -1,0 +1,7 @@
+**/*.ipynb
+venv
+**/?.java
+**/*.md
+**/*.cs
+**/answers
+**/question
