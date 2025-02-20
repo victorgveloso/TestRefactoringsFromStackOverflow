@@ -12,6 +12,7 @@ public class PageTitleTest {
     // Original version from question/0.java
     public void verifyTitle(int secsToWait) {
         new WebDriverWait(driver, secsToWait)
+                .withMessage("Any message you want")
                 .until(ExpectedConditions.titleIs(title));
     }
 
