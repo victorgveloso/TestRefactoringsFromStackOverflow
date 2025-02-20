@@ -3,14 +3,18 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class QuestionTest {
-    @Before
-    public void setUpClientStub() {
+    private void setUpClientStub() {
         // Client stub setup
     }
 
-    @Before
-    public void setUpObjectUnderTest() {
+    private void setUpObjectUnderTest() {
         // Object under test setup
+    }
+
+    @Before
+    public void setUp() {
+        setUpClientStub();
+        setUpObjectUnderTest();
     }
 
     @Test
