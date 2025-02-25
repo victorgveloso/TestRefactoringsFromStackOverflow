@@ -3,14 +3,14 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class QuestionTest {
-    @Before
-    public void setUpClientStub() {
-        // Client stub setup
+    @Before  // Will execute second (reverse lex order)
+    public void z_setUpObjectUnderTest() {
+        // Object under test setup
     }
 
-    @Before
-    public void setUpObjectUnderTest() {
-        // Object under test setup
+    @Before  // Will execute first (reverse lex order)
+    public void a_setUpClientStub() {
+        // Client stub setup
     }
 
     @Test
