@@ -19,4 +19,11 @@ public class MyObjectTest {
     public void testSomeOtherInputGivesExpectedOutput() {
         assertEquals(expectedOtherOutput, myObj.myFunction(someOtherInput));
     }
+
+    @Test
+    public void test_MyFunction_hasNoSideEffects() {
+        MyObject original = myObj.clone();
+        myObj.myFunction(someInput);
+        assertEquals(original, myObj);
+    }
 } 
