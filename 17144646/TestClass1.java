@@ -9,9 +9,11 @@ public class TestClass1 {
 }
 
 public class TestClass2 {
+    private TestClass1 testClass1 = new TestClass1();
+    
     @Test
     public void testSomethingAndSomethingElse() {
-        // Somehow execute testSomething()
-        // and then test something else
+        testClass1.testSomething();
+        // Additional test logic
     }
 } 
