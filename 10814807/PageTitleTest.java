@@ -2,6 +2,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.TimeoutException;
+import org.junit.ComparisonFailure;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -22,9 +23,8 @@ public class PageTitleTest {
                     .until(ExpectedConditions.titleIs(title));
         }
         catch (TimeoutException e) {
-            throw new AssertionError(String.format(
-                "Expected page title [%s] but was [%s]", 
-                title, driver.getTitle()));
+            throw new ComparisonFailure("Page title mismatch", 
+                title, driver.getTitle());
         }
     }
 } 
