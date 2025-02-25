@@ -9,12 +9,19 @@ public class PageTitleTest {
     private WebDriver driver;
     private String title;
     
-    // Original version from question/0.java
-    public void verifyTitle(int secsToWait) {
-        new WebDriverWait(driver, secsToWait)
-                .until(ExpectedConditions.titleIs(title));
+    public static class CustomTimeoutException extends TimeoutException {
+        private WebDriver driver;
+        
+        public CustomTimeoutException(String msg, WebDriver driver) {
+            super(msg);
+            this.driver = driver;
+        }
+        
+        public String getActualTitle() {
+            return driver.getTitle();
+        }
     }
-
+    
     // Improved version from question/1.java
     public void verifyTitleWithCustomError(int secsToWait) {
         try {
@@ -22,9 +29,14 @@ public class PageTitleTest {
                     .until(ExpectedConditions.titleIs(title));
         }
         catch (TimeoutException e) {
-            throw new AssertionError(String.format(
-                "Expected page title [%s] but was [%s]", 
-                title, driver.getTitle()));
+            throw new CustomTimeoutException(e.getMessage(), driver);
         }
+    }
+
+    
+    // Original version from question/0.java
+    public void verifyTitle(int secsToWait) {
+        new WebDriverWait(driver, secsToWait)
+                .until(ExpectedConditions.titleIs(title));
     }
 } 
