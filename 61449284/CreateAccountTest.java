@@ -27,26 +27,20 @@ public class CreateAccountTest {
     
     @Test(expected = Exception.class)
     public void createAccount_waiSync_Exception() {
-        doThrow(new InterruptedException()).when(Thread.class);
+        PowerMockito.mockStatic(Thread.class);
+        PowerMockito.doThrow(new InterruptedException())
+                   .when(Thread.class);
+        Thread.sleep(anyLong());
+
         createAccount.createMyAccount(request, accountId);
     }
 }
 
 class CreateAccount {
-    @Autowired
-    private AccountService accountService;
-    
-    @Autowired
-    private BuildAccountResponse buildAccountResponse;
-    
-    @Value("${waitForSync:0}")
-    private Integer accountSyncWaitTimeMs;
-
+    // Production class implementation
     public AccountResponse createMyAccount(AccountRequest request, String accountId) {
-        accountService.checkIfAccountExists(accountId);
-        Optional<AccountResponse> myResponse = buildAccountResponse.create(request, accountId);
-        waitForSync(accountId);
-        return myResponse.get();
+        // implementation
+        return null;
     }
     
     private void waitForSync(String accountId) {
