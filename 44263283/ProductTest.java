@@ -6,32 +6,32 @@ public class ProductTest {
     
     @Test
     public void testProduct() {
-        JsonElement asJsonObject = getProductData(); // Assume exists in SUT
-        JsonElement product = asJsonObject.get("product");
-        
-        // Original assertion statements
-        JsonElement type = product.getAsJsonObject().get("type");
-        Assert.assertEquals(ProductType.PRODUCT_1.name(), type.getAsString());
-        JsonElement name = product.getAsJsonObject().get("name");
-        Assert.assertEquals("name", name.getAsString());
-        
-        // Attempted assertion usage
-        new AssertProduct(asJsonObject.get("product")).assert(type, name);
+        JsonElement asJsonObject = getProductData();
+        // Patched assertion usage
+        AssertProduct.withProduct(asJsonObject.get("product"))
+            .ofName("name")
+            .ofType(ProductType.PRODUCT_1.name());
     }
 }
 
 class AssertProduct {
     private JsonElement product;
 
-    AssertProduct(JsonElement product) {
+    private AssertProduct(JsonElement product) {
         this.product = product;
     }
 
-    boolean assert(String name, String type) {
-        JsonElement typeElement = product.getAsJsonObject().get("type");
-        Assert.assertEquals(type, typeElement.getAsString());
-        JsonElement nameElement = product.getAsJsonObject().get("name");
-        Assert.assertEquals(name, nameElement.getAsString());
-        return true;
+    public static AssertProduct withProduct(JsonElement product) {
+        return new AssertProduct(product);
+    }
+
+    AssertProduct ofName(String name) {
+        Assert.assertEquals(name, product.getAsJsonObject().get("name").getAsString());
+        return this;
+    }
+
+    AssertProduct ofType(String type) {
+        Assert.assertEquals(type, product.getAsJsonObject().get("type").getAsString());
+        return this;
     }
 } 
