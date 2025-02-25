@@ -5,7 +5,7 @@ public class TestAssertEquals {
     @Test
     public void testStringAssignment1() {
         String a = "Hi";
-        assertEquals(a, "Hi");
+        assertEquals("Hi", a);
     }
     
     @Test
