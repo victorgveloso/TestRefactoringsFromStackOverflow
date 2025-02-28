@@ -5,22 +5,15 @@ import org.testng.annotations.Test;
 public class TestClass {
     private Object obj = new Object();
     
-    @Test
-    public void testCase() {
-        try {
-            // assert 1
-            obj.do(1);
-            fail();
-        } catch (ExpectedException e) {
-            assertEquals("Expected message", e.getMessage());
-        }
+    @Test(expectedExceptions = ExpectedException.class)
+    public void testCase1() {
+        // assert 1
+        obj.do(1);
+    }
 
-        try {
-            // assert 2
-            obj.do(2);
-            fail();
-        } catch (ExpectedException e) {
-            assertEquals("Expected message", e.getMessage());
-        }
+    @Test(expectedExceptions = ExpectedException.class)
+    public void testCase2() {
+        // assert 2
+        obj.do(2);
     }
 } 
