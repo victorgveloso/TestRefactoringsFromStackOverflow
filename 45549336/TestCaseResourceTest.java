@@ -2,17 +2,19 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import static org.mockito.Mockito.*;
 
-public class TestCaseResourceTest1 {
+public abstract class TestCaseResourceTest {
     @Mock
     private TestService testService;
     @Mock
     private AreaService areaService;
     
-    private TestCaseService1 testCaseService1;
+    protected TestCaseService1 testCaseService1;
+
+    protected abstract TestCaseService1 getServiceToTest();
 
     @Before
     public void before() throws Exception {
-        testCaseService1 = mock(TestCaseService1.class);
+        testCaseService1 = getServiceToTest();
         MockitoAnnotations.initMocks(this);
         beforeFileTest();
     }
@@ -25,5 +27,13 @@ public class TestCaseResourceTest1 {
     public void verifyFileExists() throws Exception {
         verifyOtherArea(testCaseService1);
         doReturn(false).when(areaService).checkExists(any(String.class), eq(false));
+    }
+}
+
+// Concrete implementation
+public class TestCaseResourceTest1 extends TestCaseResourceTest {
+    @Override
+    protected TestCaseService1 getServiceToTest() {
+        return mock(TestCaseService1.class);
     }
 } 
